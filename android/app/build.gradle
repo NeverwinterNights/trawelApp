@@ -249,6 +249,12 @@ android {
 }
 
 dependencies {
+
+
+  implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.0.0")
+  implementation("androidx.core:core-splashscreen:1.0.0") // add this line
+
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     //noinspection GradleDynamicVersion
