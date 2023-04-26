@@ -1,16 +1,19 @@
 import React from 'react';
 import {
-  Image,
   SafeAreaView,
   StatusBar,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import {useAppNavigation} from '../types/typesNavi';
 
 type HomePropsType = {};
 
 export const Home = ({}: HomePropsType) => {
+  const navigation = useAppNavigation();
+
   return (
     <SafeAreaView className="bg-white flex-1 relative">
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
@@ -37,17 +40,23 @@ export const Home = ({}: HomePropsType) => {
       <View className="w-[400px] h-[400px] bg-[#E99265] rounded-full absolute -bottom-28 -left-36" />
       {/*  Image*/}
       <View className="flex-1 relative items-center justify-center">
-        <Image
+        <Animatable.Image
+          animation={'fadeIn'}
+          easing={'ease-in-out'}
           source={require('../../assets/hero.png')}
           className="w-full h-full"
         />
-        <View className="absolute bottom-20 w-24 h-24 border-[#00BCC9] border-t-4 border-r-4 border-l-2 rounded-full items-center justify-center">
-          <TouchableOpacity>
-            <View className=" items-center justify-center w-20 h-20 rounded-full bg-[#00BCC9]">
-              <Text className="text-gray-50 text-[40px] font-semibold">Go</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Discover')}
+          className="absolute bottom-20 w-24 h-24 border-[#00BCC9] border-t-4 border-r-4 border-l-2 rounded-full items-center justify-center">
+          <Animatable.View
+            iterationCount={'infinite'}
+            animation={'pulse'}
+            easing={'ease-in-out'}
+            className=" items-center justify-center w-20 h-20 rounded-full bg-[#00BCC9]">
+            <Text className="text-gray-50 text-[40px] font-semibold">Go</Text>
+          </Animatable.View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
