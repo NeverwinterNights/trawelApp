@@ -1,7 +1,13 @@
 apply plugin: "com.android.application"
 
 project.ext.vectoricons = [
-    iconFontNames: [ 'MaterialIcons.ttf', 'Entypo.ttf','Fontisto.ttf',  'MaterialCommunityIcons.ttf', 'Ionicons.ttf' ]
+    iconFontNames: [ 'MaterialIcons.ttf','Fontisto.ttf', 'FontAwesome5_Regular.ttf', 'FontAwesome5_Brands.ttf',
+    'FontAwesome5_Solid.ttf',  'Entypo.ttf', 'AntDesign.ttf',  'FontAwesome.ttf',
+    'Feather.ttf',
+    'MaterialCommunityIcons.ttf',
+    'Ionicons.ttf' ]
+      // Name of the font files you want to copy
+
 ]
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

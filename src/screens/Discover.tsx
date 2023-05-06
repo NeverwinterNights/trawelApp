@@ -12,6 +12,8 @@ import {
 import {ItemMenu} from '../components/ItemMenu';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {ItemCard} from '../components/ItemCard';
+import {getPlacesData} from '../../api/api';
+import {RootObject} from '../types/dataTypes';
 
 type DiscoverPropsType = {};
 
@@ -19,13 +21,27 @@ export const Discover = ({}: DiscoverPropsType) => {
   // const navigation = useAppNavigation();
   const [inputValue, setInputValue] = useState('');
   const [type, setType] = useState('restaurants');
-  const [isLoading, setIsLoading] = useState(true);
-  const [mainData, setMainData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [mainData, setMainData] = useState<RootObject>([] as RootObject);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 1000);
+    setIsLoading(true);
+    (async () => {
+      try {
+        const data = await getPlacesData();
+        setMainData(data ? data?.filter(item => item.name) : []);
+        // console.log(
+        //   'value11111111111111111111111111111',
+        //   JSON.stringify(data, null, 2),
+        // );
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      } catch (error) {}
+    })();
   }, []);
 
   return (
@@ -99,36 +115,19 @@ export const Discover = ({}: DiscoverPropsType) => {
             <View className="px-4 mt-8 flex-row flex-wrap items-center justify-evenly">
               {mainData.length > 0 ? (
                 <>
-                  <ItemCard
-                    title="Rio De Janeiro"
-                    imageURL="https://media.istockphoto.com/id/1445004264/photo/charming-medieval-village-on-a-snowy-winters-day.jpg?s=1024x1024&w=is&k=20&c=4QXZUVSuhE9mZ00v6Q4cWghqXAn3PbOw3_5duDwWHgA="
-                    location="Brazil"
-                  />
-                  <ItemCard
-                    title="Night in the city"
-                    imageURL="https://cdn.pixabay.com/photo/2013/03/02/02/41/alley-89197_1280.jpg"
-                    location="Monaco"
-                  />
-                  <ItemCard
-                    title="Night in the city"
-                    imageURL="https://cdn.pixabay.com/photo/2013/03/02/02/41/alley-89197_1280.jpg"
-                    location="Monaco"
-                  />
-                  <ItemCard
-                    title="Night in the city"
-                    imageURL="https://cdn.pixabay.com/photo/2013/03/02/02/41/alley-89197_1280.jpg"
-                    location="Monaco"
-                  />
-                  <ItemCard
-                    title="Night in the city"
-                    imageURL="https://cdn.pixabay.com/photo/2013/03/02/02/41/alley-89197_1280.jpg"
-                    location="Monaco"
-                  />
-                  <ItemCard
-                    title="Night in the city"
-                    imageURL="https://cdn.pixabay.com/photo/2013/03/02/02/41/alley-89197_1280.jpg"
-                    location="Monaco"
-                  />
+                  {mainData.map((item, index) => (
+                    <ItemCard
+                      key={index}
+                      title={item?.name}
+                      imageURL={
+                        item?.photo?.images?.medium?.url
+                          ? item?.photo?.images?.medium?.url
+                          : 'https://cdn.pixabay.com/photo/2017/07/18/17/16/black-2516434_1280.jpg'
+                      }
+                      location={item?.location_string}
+                      data={item}
+                    />
+                  ))}
                 </>
               ) : (
                 <>

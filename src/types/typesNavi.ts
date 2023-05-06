@@ -1,11 +1,11 @@
 import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {ItemCardPropsType} from '../components/ItemCard';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootObjectChild} from './dataTypes';
 
 export type RootStackParamList = {
   Home: undefined;
   Discover: undefined;
-  Details: {param: ItemCardPropsType};
+  Details: {data: RootObjectChild};
 };
 
 export type DetailProps = NativeStackScreenProps<RootStackParamList, 'Details'>;
